@@ -5,5 +5,5 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public interface ITimerChecker {
-    public String checkTime(Time time, Timer timer, TimerTask timerTask);
+    public String checkTime(Time time);
 }

@@ -17,7 +17,7 @@ public class TimerChecker implements ITimerChecker {
     };
 
     @Override
-    public String checkTime(Time time, Timer timer, TimerTask timerTask) {
+    public String checkTime(Time time) {
         return null;
     }
 }
