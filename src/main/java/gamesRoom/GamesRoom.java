@@ -3,6 +3,7 @@ package gamesRoom;
 import post.Post;
 import session.Session;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -13,8 +14,18 @@ public class GamesRoom {
 
     public static HashMap<Post, Integer> posts = new HashMap<>();
 
-    public static  Queue<Session> places = new LinkedList<>();
+    public static LinkedList<Session> places = new LinkedList<Session>();
+
     public static  Queue<Session> waitingLine = new LinkedList<>();
+
+
+    public static final LocalTime morningStart = LocalTime.parse("09:00");
+    public static final LocalTime morningEnd = LocalTime.parse("12:00");
+    public static final LocalTime eveningStart = LocalTime.parse("02:00");
+    public static final LocalTime eveningEnd = LocalTime.parse("20:00");
+
+    public int[] times = {30,1,2,5,99};
+    public int[] money = {5, 10, 18, 40, 65};
 
     public static HashMap<Post, Integer> getPosts() {
         return posts;

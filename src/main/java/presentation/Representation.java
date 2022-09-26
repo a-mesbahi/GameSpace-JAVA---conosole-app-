@@ -9,24 +9,26 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Representation {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
     public static void main(String[] args) throws ParseException {
 
         boolean proRun = true;
-
         // Initiate  GamesRoom class
         GamesRoom gamesRoom = new GamesRoom();
 
         // Initiate  metier class
         Metier metier = new Metier();
         while(proRun){
-
-            System.out.printf("%-60s %-60s %-60s %s\n","1-Review posts","2-Add session","3-Get the total incoming","4-leave the program");
+            System.out.println();
+            System.out.printf(ANSI_CYAN+"%-60s %-60s %-60s %s\n"+ANSI_RESET,"1-Review posts","2-Add session","3-Get the total incoming","4-leave the program");
 
             Scanner input = new Scanner(System.in);
 
 
             // First choice
-            System.out.print("Enter your choice : ");
+            System.out.printf("\nEnter your choice : ");
             int inst1 = Integer.parseInt(input.nextLine());
 
 
@@ -43,30 +45,15 @@ public class Representation {
                     metier.checkPosts();
                     break;
                 case 2 :
-
-                    System.out.printf("\nFirst Name : ");
-                    String fName = input.nextLine();
-
-                    System.out.printf("\nLast Name : ");
-                    String lName = input.nextLine();
-
-                    System.out.printf("\nGame : ");
-                    String game = input.nextLine();
-
-                    System.out.printf("\nPost number : ");
-                    int nPost = Integer.parseInt(input.nextLine());
-
-                    System.out.printf("\nPeriod : ");
-                    int period = Integer.parseInt(input.nextLine());
-
-                    System.out.printf("\nTime to Start : ");
-                    String strTime = input.nextLine();
-
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                    java.sql.Time startTime = new java.sql.Time(format.parse(strTime).getTime());
-
-                    metier.addSession(fName,lName,game,nPost,period,startTime);
-
+                    if(GamesRoom.places.size()>=9 ){
+                        if(GamesRoom.waitingLine.size()>=8){
+                            System.out.println("GameSpace is full");
+                            break;
+                        }
+                        System.out.println("full places");
+                        break;
+                    }
+                    metier.addSession();
                     break;
                 case 3 :
                     System.out.println("get the total incoming");
@@ -75,9 +62,11 @@ public class Representation {
                     proRun = false;
                     break;
             }
+            System.out.println();
             System.out.println("-----------------------------------------------------------------------------------------------" +
                     "----------------------------------------------------------------------------------------------" +
                     "-----------------------------------------------------------------------------------");
+            System.out.println();
         }
 
     }

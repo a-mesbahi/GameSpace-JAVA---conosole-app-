@@ -1,9 +1,12 @@
 package interfaces;
 
-import java.sql.Time;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import java.text.ParseException;
+import java.time.LocalTime;
+import java.util.HashMap;
 
 public interface ITimerChecker {
-    public String checkTime(Time time);
+    String getTheEndTime(String startTime, int period) throws ParseException;
+
+    HashMap<String,String> getPlayingTime(LocalTime timeNow);
 }

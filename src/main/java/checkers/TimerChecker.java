@@ -1,23 +1,130 @@
 package checkers;
 
+import gamesRoom.GamesRoom;
 import interfaces.ITimerChecker;
+import post.Post;
+import session.Session;
 
-import java.sql.Time;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.*;
 
 public class TimerChecker implements ITimerChecker {
-    Timer timer = new Timer();
+    Timer timer ;
 
-    TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            System.out.println("hello");
-        }
-    };
+    TimerTask task ;
+
+    public TimerChecker(int nPost, Session session,int time) {
+
+        this.timer = new Timer();
+        this.task = new TimerTask() {
+            @Override
+            public void run() {
+
+
+
+                HashMap<Post, Integer> posts = GamesRoom.posts;
+                Iterator<Map.Entry<Post,Integer>> iterator = posts.entrySet().iterator();
+
+                while(iterator.hasNext()){
+                    Map.Entry<Post, Integer> entry = iterator.next();
+                    Post post = (Post) entry.getKey();
+                    if(post.getPostNum()==nPost){
+                        entry.setValue(0);
+                    }
+                }
+
+                int index = GamesRoom.places.indexOf(session);
+                GamesRoom.places.remove(index);
+
+
+
+            }
+        };
+        this.timer.schedule(this.task,time);
+    }
+
+    public TimerChecker() {
+    }
 
     @Override
-    public String checkTime(Time time) {
-        return null;
+    public String getTheEndTime(String startTime, int period) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+        Date d = df.parse(startTime);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(Calendar.MINUTE, period);
+        String newTime = df.format(cal.getTime());
+        return newTime;
     }
+
+    @Override
+    public HashMap<String,String> getPlayingTime(LocalTime timeNow) {
+
+        HashMap<String,String> schedulesAvailable = new HashMap<>();
+        schedulesAvailable.put("f","full");
+        schedulesAvailable.put("1","30min");
+
+        if(timeNow.isBefore(GamesRoom.morningEnd) && timeNow.isAfter(GamesRoom.morningStart)){
+            long diffStartMorning = Duration.between(timeNow,GamesRoom.morningEnd).toMinutes();
+            if(diffStartMorning>=30){
+                if(diffStartMorning>=60){
+                    schedulesAvailable.put("2","1h");
+                    if(diffStartMorning>=120){
+                        schedulesAvailable.put("3","2h");
+                    }
+                }
+            }else{
+                schedulesAvailable.clear();
+            }
+
+        } else if (timeNow.isBefore(GamesRoom.eveningEnd) && timeNow.isAfter(GamesRoom.eveningStart)) {
+            long diffStartEven = Duration.between(timeNow,GamesRoom.eveningEnd).toMinutes();
+            if(diffStartEven>=30){
+                if(diffStartEven>=60){
+                    schedulesAvailable.put("2","1h");
+                    if(diffStartEven>=120){
+                        schedulesAvailable.put("3","2h");
+                        if(diffStartEven>=300){
+                            schedulesAvailable.put("4","5h");
+                            if(diffStartEven<330){
+                                schedulesAvailable.remove("f");
+                            }
+                        }
+                    }
+                }
+
+            }else{
+                schedulesAvailable.clear();
+            }
+        }else{
+            schedulesAvailable.clear();
+            System.out.println("none");
+
+        }
+
+        return schedulesAvailable;
+
+
+
+        /*
+        long diffStartMorning = Duration.between(GamesRoom.morningStart,timeNow).toMinutes();
+        long diffEndMorning = Duration.between(timeNow,GamesRoom.morningEnd).toMinutes();
+
+
+        LocalTime diffStartEve = LocalTime.parse("02:00");
+        LocalTime diffEndEve = LocalTime.parse("20:00");
+
+
+
+
+        System.out.println(diffEndMorning);
+
+         */
+    }
+
+
 }
