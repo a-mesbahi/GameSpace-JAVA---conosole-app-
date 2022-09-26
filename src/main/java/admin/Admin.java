@@ -25,8 +25,10 @@ public class Admin implements IAdmin {
         // Create an instance of the session object
         Session session = new Session(fName, lName, game, nPost, period, startTimeT, finishTime);
 
+        int timerTime = period*60000;
+
         // link the timer
-        TimerChecker timer = new TimerChecker(nPost, session, 100000000);
+        TimerChecker timer = new TimerChecker(nPost, session, timerTime);
 
 
         // Add the session to the list

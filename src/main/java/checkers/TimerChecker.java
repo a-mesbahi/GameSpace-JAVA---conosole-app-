@@ -1,5 +1,6 @@
 package checkers;
 
+import admin.Admin;
 import gamesRoom.GamesRoom;
 import interfaces.ITimerChecker;
 import post.Post;
@@ -17,15 +18,13 @@ public class TimerChecker implements ITimerChecker {
 
     TimerTask task ;
 
-    public TimerChecker(int nPost, Session session,int time) {
+    public TimerChecker(int nPost, Session session,int time)  {
 
         this.timer = new Timer();
         this.task = new TimerTask() {
             @Override
             public void run() {
-
-
-
+                System.out.printf("\nLe post %d est libre\n",nPost);
                 HashMap<Post, Integer> posts = GamesRoom.posts;
                 Iterator<Map.Entry<Post,Integer>> iterator = posts.entrySet().iterator();
 
@@ -34,11 +33,28 @@ public class TimerChecker implements ITimerChecker {
                     Post post = (Post) entry.getKey();
                     if(post.getPostNum()==nPost){
                         entry.setValue(0);
+                        post.setSession(null);
                     }
                 }
 
                 int index = GamesRoom.places.indexOf(session);
                 GamesRoom.places.remove(index);
+
+
+                Session newSession = GamesRoom.waitingLine.poll();
+
+
+                if(newSession!=null){
+                    LocalTime timeNow = LocalTime.now();
+
+                    Admin admin = new Admin();
+
+                    try {
+                        admin.addSession(newSession.getfName(), newSession.getlName(), newSession.getGame(), nPost, newSession.getPeriod(), timeNow.toString());
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
 
 
@@ -65,7 +81,7 @@ public class TimerChecker implements ITimerChecker {
     public HashMap<String,String> getPlayingTime(LocalTime timeNow) {
 
         HashMap<String,String> schedulesAvailable = new HashMap<>();
-        schedulesAvailable.put("f","full");
+        schedulesAvailable.put("0","full");
         schedulesAvailable.put("1","30min");
 
         if(timeNow.isBefore(GamesRoom.morningEnd) && timeNow.isAfter(GamesRoom.morningStart)){
@@ -83,6 +99,9 @@ public class TimerChecker implements ITimerChecker {
 
         } else if (timeNow.isBefore(GamesRoom.eveningEnd) && timeNow.isAfter(GamesRoom.eveningStart)) {
             long diffStartEven = Duration.between(timeNow,GamesRoom.eveningEnd).toMinutes();
+            if(diffStartEven<330){
+                schedulesAvailable.remove("0");
+            }
             if(diffStartEven>=30){
                 if(diffStartEven>=60){
                     schedulesAvailable.put("2","1h");
@@ -90,9 +109,6 @@ public class TimerChecker implements ITimerChecker {
                         schedulesAvailable.put("3","2h");
                         if(diffStartEven>=300){
                             schedulesAvailable.put("4","5h");
-                            if(diffStartEven<330){
-                                schedulesAvailable.remove("f");
-                            }
                         }
                     }
                 }

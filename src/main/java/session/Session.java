@@ -34,6 +34,33 @@ public class Session {
     String fName, lName, game, finishTime,startTime;
     int nPost,period;
 
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    public void setGame(String game) {
+        this.game = game;
+    }
+
+    public void setFinishTime(String finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setnPost(int nPost) {
+        this.nPost = nPost;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
 
     public Session() {
     }

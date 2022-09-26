@@ -45,12 +45,13 @@ public class Representation {
                     metier.checkPosts();
                     break;
                 case 2 :
-                    if(GamesRoom.places.size()>=9 ){
+                    if(GamesRoom.places.size()>=2 ){
                         if(GamesRoom.waitingLine.size()>=8){
                             System.out.println("GameSpace is full");
                             break;
                         }
-                        System.out.println("full places");
+                        metier.addToWaitingLine();
+
                         break;
                     }
                     metier.addSession();

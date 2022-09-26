@@ -24,8 +24,8 @@ public class GamesRoom {
     public static final LocalTime eveningStart = LocalTime.parse("02:00");
     public static final LocalTime eveningEnd = LocalTime.parse("20:00");
 
-    public int[] times = {30,1,2,5,99};
-    public int[] money = {5, 10, 18, 40, 65};
+    public static int[] times = {1440,30,60,120,300};
+    public static int[] money = {65,  5, 10, 18, 40};
 
     public static HashMap<Post, Integer> getPosts() {
         return posts;

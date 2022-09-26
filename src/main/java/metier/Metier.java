@@ -1,11 +1,13 @@
 package metier;
 
+import checkers.TimerChecker;
 import gamesRoom.GamesRoom;
 import post.Post;
 import admin.Admin;
 import session.Session;
 
 import java.text.ParseException;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Metier {
@@ -46,28 +48,60 @@ public class Metier {
 
         public void addSession() throws ParseException {
 
-            Scanner input = new Scanner(System.in);
-            System.out.printf("\nFirst Name : ");
-            String fName = input.nextLine();
+            //LocalTime timeNow = LocalTime.now();
+            LocalTime timeNow = LocalTime.parse("14:00");
 
-            System.out.printf("\nLast Name : ");
-            String lName = input.nextLine();
+            TimerChecker time = new TimerChecker();
 
-            System.out.printf("\nGame : ");
-            String game = input.nextLine();
+            HashMap<String, String> result= time.getPlayingTime(timeNow);
+            Iterator<Map.Entry<String, String>> iterator = result.entrySet().iterator();
 
-            System.out.printf("\nPost number : ");
-            int nPost = Integer.parseInt(input.nextLine());
+            if(result.size()==0){
+                System.out.println("Sorry will close");
+            }else {
+                Scanner input = new Scanner(System.in);
+                System.out.printf("\nFirst Name : ");
+                String fName = input.nextLine();
 
-            System.out.printf("\nPeriod : ");
-            int period = Integer.parseInt(input.nextLine());
+                System.out.printf("\nLast Name : ");
+                String lName = input.nextLine();
 
-            System.out.printf("\nTime to Start : ");
-            String strTime = input.nextLine();
+                System.out.printf("\nGame : ");
+                String game = input.nextLine();
+
+                System.out.printf("\nPost number : ");
+                int nPost = Integer.parseInt(input.nextLine());
+
+                System.out.println();
+                while(iterator.hasNext()) {
+                    Map.Entry<String, String> entry = iterator.next();
+                    String num = entry.getKey();
+                    String option = entry.getValue();
+                    System.out.printf("%30s-%s",num,option);
+                }
+                System.out.println();
+
+                System.out.printf("\nPeriod : ");
+                String periodS = input.nextLine();
+
+
+                int period = GamesRoom.times[Integer.parseInt(periodS)];
+                int money = GamesRoom.money[Integer.parseInt(periodS)];
 
 
 
-            admin.addSession(fName, lName, game, nPost, period, strTime);
+
+
+                System.out.printf("\nTime to Start : ");
+                String strTime = input.nextLine();
+
+
+                admin.addSession(fName, lName, game, nPost, period, strTime);
+                System.out.printf("You have to pay : %d DH",money);
+            }
+
+
+
         }
 
         public void addToWaitingLine(){
@@ -87,6 +121,7 @@ public class Metier {
             int period = Integer.parseInt(input.nextLine());
 
             admin.addToWaitingLine(fName, lName, game, period);
+
 
 
         }

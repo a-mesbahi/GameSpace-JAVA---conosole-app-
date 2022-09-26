@@ -7,10 +7,6 @@ import session.Session;
 import java.awt.*;
 import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
@@ -34,18 +30,6 @@ public class Main {
          */
 
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-
-        LocalTime timeNow = LocalTime.now();
-
-        TimerChecker time = new TimerChecker();
-
-
-        LocalTime diffEndMorning = LocalTime.parse("14:31");
-
-        HashMap<String, String> reuslt= time.getPlayingTime(diffEndMorning);
-
-        System.out.println(reuslt);
 
 
 
