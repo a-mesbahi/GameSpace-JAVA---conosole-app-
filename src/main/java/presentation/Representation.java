@@ -12,7 +12,7 @@ public class Representation {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws Exception {
 
         boolean proRun = true;
         // Initiate  GamesRoom class
@@ -45,7 +45,7 @@ public class Representation {
                     metier.checkPosts();
                     break;
                 case 2 :
-                    if(GamesRoom.places.size()>=2 ){
+                    if(GamesRoom.places.size()>=9){
                         if(GamesRoom.waitingLine.size()>=8){
                             System.out.println("GameSpace is full");
                             break;

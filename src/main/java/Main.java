@@ -1,16 +1,14 @@
-import admin.Admin;
-import checkers.TimerChecker;
 import gamesRoom.GamesRoom;
+import incoming.Incoming;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import post.Post;
-import session.Session;
+import writer.JsonWriter;
 
-import java.awt.*;
-import java.sql.Time;
-import java.text.ParseException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws Exception {
 
 
         HashMap<Post, Integer> posts = GamesRoom.posts;
@@ -29,6 +27,11 @@ public class Main {
         }
          */
 
+
+        JsonWriter json = new JsonWriter();
+        Stack<Incoming> moreThanMonth = json.allRecords();
+        Incoming current = moreThanMonth.peek();
+        System.out.println(current.money);
 
 
 

@@ -48,8 +48,7 @@ public class Metier {
 
         public void addSession() throws ParseException {
 
-            //LocalTime timeNow = LocalTime.now();
-            LocalTime timeNow = LocalTime.parse("14:00");
+            LocalTime timeNow = LocalTime.now();
 
             TimerChecker time = new TimerChecker();
 
@@ -82,13 +81,10 @@ public class Metier {
                 System.out.println();
 
                 System.out.printf("\nPeriod : ");
-                String periodS = input.nextLine();
+                int periodS = Integer.parseInt(input.nextLine());
 
-
-                int period = GamesRoom.times[Integer.parseInt(periodS)];
-                int money = GamesRoom.money[Integer.parseInt(periodS)];
-
-
+                int period = GamesRoom.times[periodS];
+                int money = GamesRoom.money[periodS];
 
 
 
@@ -98,6 +94,7 @@ public class Metier {
 
                 admin.addSession(fName, lName, game, nPost, period, strTime);
                 System.out.printf("You have to pay : %d DH",money);
+                GamesRoom.TotalIncoming+=money;
             }
 
 
@@ -105,6 +102,13 @@ public class Metier {
         }
 
         public void addToWaitingLine(){
+
+            LocalTime timeNow = LocalTime.now();
+
+            TimerChecker time = new TimerChecker();
+
+            HashMap<String, String> result= time.getPlayingTime(timeNow);
+            Iterator<Map.Entry<String, String>> iterator = result.entrySet().iterator();
 
             Scanner input = new Scanner(System.in);
             System.out.printf("\nFirst Name : ");
@@ -116,11 +120,24 @@ public class Metier {
             System.out.printf("\nGame : ");
             String game = input.nextLine();
 
+            System.out.println();
+            while(iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                String num = entry.getKey();
+                String option = entry.getValue();
+                System.out.printf("%30s-%s",num,option);
+            }
+            System.out.println();
 
             System.out.printf("\nPeriod : ");
-            int period = Integer.parseInt(input.nextLine());
+            int periodS = Integer.parseInt(input.nextLine());
+
+            int period = GamesRoom.times[periodS];
+            int money = GamesRoom.money[periodS];
 
             admin.addToWaitingLine(fName, lName, game, period);
+            System.out.printf("You have to pay : %d DH",money);
+            GamesRoom.TotalIncoming+=money;
 
 
 

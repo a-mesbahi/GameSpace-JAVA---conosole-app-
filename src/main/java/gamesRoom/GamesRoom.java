@@ -1,12 +1,16 @@
 package gamesRoom;
 
+import incoming.Incoming;
+import org.json.simple.JSONObject;
 import post.Post;
 import session.Session;
+import writer.JsonWriter;
 
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class GamesRoom {
     public static HashMap <String, Integer> screens = new HashMap<>();
@@ -18,6 +22,12 @@ public class GamesRoom {
 
     public static  Queue<Session> waitingLine = new LinkedList<>();
 
+    public static int TotalIncoming = 0;
+
+    public static Long MonthlyIncoming;
+
+
+    public static Stack<JSONObject> monthlyIncoming = new Stack<>();
 
     public static final LocalTime morningStart = LocalTime.parse("09:00");
     public static final LocalTime morningEnd = LocalTime.parse("12:00");
@@ -31,7 +41,7 @@ public class GamesRoom {
         return posts;
     }
 
-    public GamesRoom(){
+    public GamesRoom() throws Exception {
 
         // Add the screens
         screens.put("Dell",3);
@@ -55,6 +65,12 @@ public class GamesRoom {
         posts.put(new Post("Dell","Nintendo switch"),0);
         posts.put(new Post("Asus","Nintendo switch"),0);
 
+
+        //get the total incoming
+        JsonWriter json = new JsonWriter();
+        Stack<Incoming> moreThanMonth = json.allRecords();
+        Incoming current = moreThanMonth.peek();
+        System.out.println(current);
 
 
     }

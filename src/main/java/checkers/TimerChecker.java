@@ -24,7 +24,7 @@ public class TimerChecker implements ITimerChecker {
         this.task = new TimerTask() {
             @Override
             public void run() {
-                System.out.printf("\nLe post %d est libre\n",nPost);
+                //System.out.printf("\nLe post %d est libre\n",nPost);
                 HashMap<Post, Integer> posts = GamesRoom.posts;
                 Iterator<Map.Entry<Post,Integer>> iterator = posts.entrySet().iterator();
 
