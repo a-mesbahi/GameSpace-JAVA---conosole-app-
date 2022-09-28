@@ -14,6 +14,8 @@ import java.util.Map;
 
 
 public class Admin implements IAdmin {
+
+    // This method create a session it receives arguments from the user of the app
     @Override
     public void addSession(String fName, String lName, String game, int nPost, int period, String startTimeT) throws ParseException {
 
@@ -54,12 +56,13 @@ public class Admin implements IAdmin {
     }
 
 
-
+    // Method to add client
     @Override
     public void addClient() {
 
     }
 
+    // Method it runs when there's no post available & it takes four arguments
     @Override
     public void addToWaitingLine(String fName, String lName, String game, int period) {
 
@@ -68,12 +71,15 @@ public class Admin implements IAdmin {
         GamesRoom.waitingLine.add(session);
     }
 
+    // To return all posts and there infos
     @Override
     public HashMap<Post, Integer> getPostsInfo() {
         HashMap<Post, Integer> posts = GamesRoom.posts;
         return posts;
     }
 
+
+    // to return the total incoming
     @Override
     public String getTotalIncome() {
         return null;

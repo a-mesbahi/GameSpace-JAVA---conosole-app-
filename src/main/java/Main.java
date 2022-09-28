@@ -28,10 +28,21 @@ public class Main {
          */
 
 
-        JsonWriter json = new JsonWriter();
-        Stack<Incoming> moreThanMonth = json.allRecords();
-        Incoming current = moreThanMonth.peek();
-        System.out.println(current.money);
+        List<Object> strings = new ArrayList<>();
+        strings.add("amine");
+        strings.add("amine");
+        strings.add("amine");
+        strings.add(2);
+        strings.add("amine");
+        strings.add("amine");
+
+
+        for (Object item : strings){
+            if (item instanceof String) {
+                System.out.println(item);
+            }
+        }
+        System.out.println(strings);
 
 
 

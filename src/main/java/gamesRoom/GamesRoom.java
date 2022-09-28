@@ -24,7 +24,7 @@ public class GamesRoom {
 
     public static int TotalIncoming = 0;
 
-    public static Long MonthlyIncoming;
+    public static int MonthlyIncoming;
 
 
     public static Stack<JSONObject> monthlyIncoming = new Stack<>();
@@ -70,7 +70,7 @@ public class GamesRoom {
         JsonWriter json = new JsonWriter();
         Stack<Incoming> moreThanMonth = json.allRecords();
         Incoming current = moreThanMonth.peek();
-        System.out.println(current);
+        GamesRoom.MonthlyIncoming = current.money;
 
 
     }

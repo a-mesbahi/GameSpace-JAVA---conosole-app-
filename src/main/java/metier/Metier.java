@@ -17,6 +17,8 @@ public class Metier {
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_PURPLE = "\u001B[35m";
         public static final String ANSI_CYAN = "\u001B[36m";
+
+        //This method shows all posts and there status
         public void checkPosts(){
             HashMap<Post, Integer> posts = admin.getPostsInfo();
             Iterator<Map.Entry<Post,Integer>> iterator = posts.entrySet().iterator();
@@ -46,9 +48,12 @@ public class Metier {
             }
         }
 
+        //this method is used to create a session on a specific post it runs also the timerChecker to check the end of the session
         public void addSession() throws ParseException {
 
             LocalTime timeNow = LocalTime.now();
+            //LocalTime timeNow = LocalTime.parse("17:00");
+
 
             TimerChecker time = new TimerChecker();
 
@@ -101,6 +106,7 @@ public class Metier {
 
         }
 
+        // This one it used to add a person to the waiting list if there's no place available
         public void addToWaitingLine(){
 
             LocalTime timeNow = LocalTime.now();

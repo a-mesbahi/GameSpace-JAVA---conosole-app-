@@ -45,7 +45,7 @@ public class Representation {
                     metier.checkPosts();
                     break;
                 case 2 :
-                    if(GamesRoom.places.size()>=9){
+                    if(GamesRoom.places.size()>=2){
                         if(GamesRoom.waitingLine.size()>=8){
                             System.out.println("GameSpace is full");
                             break;
@@ -57,7 +57,8 @@ public class Representation {
                     metier.addSession();
                     break;
                 case 3 :
-                    System.out.println("get the total incoming");
+                    System.out.printf("This day : %d\n",GamesRoom.TotalIncoming);
+                    System.out.printf("This month : %d",GamesRoom.MonthlyIncoming);
                     break;
                 case 4 :
                     proRun = false;
